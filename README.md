@@ -1,0 +1,2 @@
+# TheMightiestPlayer
+TheMightiestPlayer -- Spigot
