@@ -3,6 +3,7 @@ package hotdoctor.plugin.themightiestplayer;
 import java.io.File;
 
 import java.io.IOException;
+import java.sql.SQLException;
 import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.List;
@@ -56,6 +57,7 @@ public class Main extends JavaPlugin{
 		this.registerData();
 		configuration = YamlConfiguration.loadConfiguration(configyml);
 		plugindata = YamlConfiguration.loadConfiguration(datayml);
+		registerAdminCommands();
 		menu = new MenuCreator(this);
 		dateManager = new DateManager(this);
 		event = new Event(this);
@@ -66,7 +68,7 @@ public class Main extends JavaPlugin{
 			e.printStackTrace();
 		}
 		registerMenuListeners();
-		registerAdminCommands();
+		
 		if (Bukkit.getPluginManager().getPlugin("PlaceholderAPI") != null) {
 			hook = new MightiestPlaceholder();
 			hook.register();
@@ -83,9 +85,26 @@ public class Main extends JavaPlugin{
 				}
 			}
 		}
+		Bukkit.broadcastMessage(fancy("console", "&8[&6TheMightiestPlayer&8] &9&lCONFIG PROGRESS&6 >> &bFinishing events..."));
+		for(String id : Main.enabledEventsID) {
+			EventManager manager = EventCreator.cachedInfo.get(id);
+			manager.setEventProgress(EventProgress.FINISHED);
+			
+		}
+		if(eventCreator.mysql != null) {
+			Bukkit.getConsoleSender().sendMessage(fancy("console", "&8[&6TheMightiestPlayer&8] &9&lCONFIG PROGRESS&6 >> &bDisconnecting from MySQL Database..."));
+			try {
+				eventCreator.mysql.Disconnect();
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
 		if (Bukkit.getPluginManager().getPlugin("PlaceholderAPI") != null) {
+			Bukkit.broadcastMessage(fancy("console", "&8[&6TheMightiestPlayer&8] &9&lCONFIG PROGRESS&6 >> &cUnregistering placeholders..."));
 			hook.unregister();
 		}
+		Bukkit.broadcastMessage(fancy("console", "&8[&6TheMightiestPlayer&8] &9&lCONFIG PROGRESS&6 >> &cPlugin disabled correctly.!"));
 		
 	}
 	@SuppressWarnings("deprecation")

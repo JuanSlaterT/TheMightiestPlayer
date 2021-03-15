@@ -18,7 +18,7 @@ import net.md_5.bungee.api.ChatColor;
 public class PLAYER_BREAK_BLOCK extends CustomEvent implements Listener{
 
 	public PLAYER_BREAK_BLOCK(Plugin plugin) {
-		super(plugin, "PLAYER_BREAK_BLOCK", "Executed when player breaks a block", "PLAYER_BREAK_BLOCK:[Property]");
+		super(plugin, "PLAYER_BREAK_BLOCK", "Executed when player breaks a block");
 		// TODO Auto-generated constructor stub
 	}
 
@@ -33,7 +33,7 @@ public class PLAYER_BREAK_BLOCK extends CustomEvent implements Listener{
 			Player p = e.getPlayer();
 			String properties = this.getArguments();
 			if(this.isValid(p, properties, e.getBlock())) {
-				this.addPoints(p, getPointsFromConfig(), this.getPointsFromConfig());
+				this.addPoints(p, getPointsFromConfig());
 			}
 			
 			

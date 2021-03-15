@@ -4,6 +4,7 @@ import java.lang.reflect.InvocationTargetException;
 
 import java.util.Arrays;
 import java.util.HashMap;
+import java.util.List;
 
 import org.bukkit.plugin.Plugin;
 
@@ -30,7 +31,6 @@ public class Event {
 		for(CustomEvent event : Main.eventList) {
 			plugin.sendError("&8[&6TheMightiestPlayer&8] &a&lPLUGIN PROGRESS&6 >> &bCustomEvent "+event.getName()+" &bloaded without problems");
 			plugin.sendError("&8[&6TheMightiestPlayer&8] &7&lPLUGIN EVENT INFORMATION&6 >> &bDescription of this event: "+event.getDescription());
-			plugin.sendError("&8[&6TheMightiestPlayer&8] &7&lPLUGIN EVENT INFORMATION&6 >> &bUsage of this event: "+event.getUsage());
 		}
 		plugin.sendError("&8[&6TheMightiestPlayer&8] &a&lPLUGIN &6&lSUCESS&6 >> &bLoaded Event and CustomEvents classes made by the plugin correctly.");
 		
@@ -38,7 +38,28 @@ public class Event {
 	
 	private Main plugin;
 	
-	
+	public void unloadEvents(Class<? extends CustomEvent>... clases) {
+		Arrays.stream(clases).forEach(clase -> {
+			try {
+				CustomEvent evento = clase.getConstructor(Plugin.class).newInstance(plugin);
+				List<CustomEvent> lista = Main.eventList;
+				var1 : for(CustomEvent e : lista) {
+					if(e.getName().contentEquals(evento.getName())) {
+						Main.eventList.remove(e);
+						if(Main.enabledEvents.contains(e.getName()+";;"+e.getDescription())) {
+							Main.enabledEvents.remove(e.getName()+";;"+e.getDescription());
+						}
+						break var1;
+					}
+				}
+			} catch (InstantiationException | IllegalAccessException | IllegalArgumentException
+					| InvocationTargetException | NoSuchMethodException | SecurityException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+			
+		});
+	}
 	public void loadEvents(@SuppressWarnings("unchecked") Class<? extends CustomEvent>... clases) {
 		
 		Arrays.stream(clases).forEach(Eventclass -> {
@@ -56,9 +77,9 @@ public class Event {
 	
 	private HashMap<CustomEvent, Boolean> alreadyEnabled = new HashMap<>();
 	public void enableEvent(CustomEvent event, String eventID) {
-		if(!Main.enabledEvents.contains(event.getName()+";;"+event.getDescription()+";;"+event.getUsage())) {
+		if(!Main.enabledEvents.contains(event.getName()+";;"+event.getDescription())) {
 			
-			Main.enabledEvents.add(event.getName()+";;"+event.getDescription()+";;"+event.getUsage());
+			Main.enabledEvents.add(event.getName()+";;"+event.getDescription());
 			if(!alreadyEnabled.containsKey(event)) {
 				alreadyEnabled.put(event, true);
 				event.onEnable();
@@ -74,8 +95,8 @@ public class Event {
 	}
 	
 	public void disableEvent(CustomEvent event) {
-		if(Main.enabledEvents.contains(event.getName()+";;"+event.getDescription()+";;"+event.getUsage())) {
-			Main.enabledEvents.remove(event.getName()+";;"+event.getDescription()+";;"+event.getUsage());
+		if(Main.enabledEvents.contains(event.getName()+";;"+event.getDescription())) {
+			Main.enabledEvents.remove(event.getName()+";;"+event.getDescription());
 		}
 	}
 

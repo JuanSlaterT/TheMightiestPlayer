@@ -13,13 +13,11 @@ public abstract class CustomEvent{
 	
 	private String name;
 	private String description;
-	private String usage;
 	private Plugin plugin;
 	
-	public CustomEvent(Plugin plugin, String name, String description, String usage) {
+	public CustomEvent(Plugin plugin, String name, String description) {
 		this.name = name;
 		this.description = description;
-		this.usage = usage;
 		this.plugin = plugin;
 	}
 	
@@ -27,7 +25,7 @@ public abstract class CustomEvent{
 	
 	
 	public boolean isEventActive() {
-		return Main.enabledEvents.contains(name+";;"+description+";;"+usage);
+		return Main.enabledEvents.contains(name+";;"+description);
 	}
 	
 	public int getPointsFromConfig() {
@@ -89,14 +87,14 @@ public abstract class CustomEvent{
 		return null;
 		
 	}
-	public void addPoints(Player p, int amount, int individual) {
+	public void addPoints(Player p, int amount) {
 		for(String id : Main.enabledEventsID) {
 			EventManager manager = EventCreator.cachedInfo.get(id);
 			if(!manager.getEventProgress().equals(EventProgress.STARTED)) {
 				continue;
 			}
 			if(manager.getEventType().equalsIgnoreCase(this.getName())){
-				EventCreator.addPointsEvent(id, p, amount, individual);
+				EventCreator.addPointsEvent(id, p, amount, amount);
 				return;
 			}
 		}
@@ -136,9 +134,6 @@ public abstract class CustomEvent{
 	}
 	public String getDescription() {
 		return description;
-	}
-	public String getUsage() {
-		return usage;
 	}
 	
 	

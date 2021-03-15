@@ -9,6 +9,7 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.plugin.Plugin;
+import org.bukkit.scheduler.BukkitRunnable;
 
 import hotdoctor.plugin.themightiestplayer.Main;
 import hotdoctor.plugin.themightiestplayer.managers.EventManager;
@@ -47,12 +48,54 @@ public class LocatedDatabase implements Listener{
 	
 	@EventHandler
 	public void salir(PlayerQuitEvent e) {
-		clase.saveData(e.getPlayer());
+		EventManager manager = EventCreator.cachedInfo.get(clase.getEventID());
+		if(manager.getDatabaseTypes().equals(DatabaseTypes.MULTIWORLD)) {
+			if(!timer.containsKey(e.getPlayer())) {
+				wait(e.getPlayer());
+				clase.saveData(e.getPlayer());
+			}
+		}else {
+			clase.saveData(e.getPlayer());
+		}
 	}
 	
 	@EventHandler 
 	public void entrar(PlayerJoinEvent e) {
-		clase.loadData(e.getPlayer());
+		EventManager manager = EventCreator.cachedInfo.get(clase.getEventID());
+		if(manager.getDatabaseTypes().equals(DatabaseTypes.MULTIWORLD)) {
+			if(!this.everythingHasData(e.getPlayer())) {
+				clase.loadData(e.getPlayer());
+			}
+		}else {
+			clase.loadData(e.getPlayer());
+		}
+	}
+	
+	
+	private HashMap<Player, Integer> timer = new HashMap<>();
+	public void wait(Player p) {
+		int value = 10;
+		if(!timer.containsKey(p)) {
+			timer.put(p, value);
+			new BukkitRunnable() {
+
+				@Override
+				public void run() {
+					int time = timer.get(p);
+					if(time == 0) {
+						timer.remove(p);
+						this.cancel();
+					}else {
+						time = time - 1;
+						timer.remove(p);
+						timer.put(p, time);
+					}
+					
+				}
+				
+			}.runTaskTimerAsynchronously(plugin, 20, 20);
+		}
+		
 	}
 	
 	
