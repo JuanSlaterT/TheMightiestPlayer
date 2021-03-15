@@ -2,6 +2,7 @@ package hotdoctor.plugin.themightiestplayer.utils;
 
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
+import java.sql.SQLException;
 import java.text.ParseException;
 import java.util.Date;
 import java.util.HashMap;
@@ -18,11 +19,13 @@ import hotdoctor.plugin.themightiestplayer.utils.databasetypes.Database;
 import hotdoctor.plugin.themightiestplayer.utils.databasetypes.DatabaseTypes;
 import hotdoctor.plugin.themightiestplayer.utils.databasetypes.GoalTypes;
 import hotdoctor.plugin.themightiestplayer.utils.databasetypes.MightiestDataPlayer;
+import hotdoctor.plugin.themightiestplayer.utils.databasetypes.MightiestMySQLPlayer;
+import hotdoctor.plugin.themightiestplayer.utils.databasetypes.MySQL;
 
 public class EventCreator {
 	public static HashMap<String, EventManager> cachedInfo = new HashMap<>();
 	private Main plugin;
-	
+	public MySQL mysql;
 	public EventCreator(Main plugin) throws ParseException {
 		this.plugin = plugin;
 		plugin.sendError("&8[&6TheMightiestPlayer&8] &9&lCONFIG PROGRESS&6 >> &bStarting loading EventCreator Manager");
@@ -83,8 +86,41 @@ public class EventCreator {
 					plugin.sendError("&8[&6TheMightiestPlayer&8] &e&lCONFIG &3&lSUCESS&6 >> &bLoaded privated global database without problems.");
 				}
 			}else if(type.equals(DatabaseTypes.SHARED)) {
+				if(mysql == null) {
+					plugin.sendError("&8[&6TheMightiestPlayer&8] &9&lCONFIG PROGRESS&6 >> &bConnecting to your MySQL Database...");
+					String host = Main.configuration.getString("MySQL-Info.host");
+					String username = Main.configuration.getString("MySQL-Info.username");
+					String password = Main.configuration.getString("MySQL-Info.password");
+					String database = Main.configuration.getString("MySQL-Info.database");
+					String port = Main.configuration.getString("MySQL-Info.port");
+					String useSSL = Main.configuration.getString("MySQL-Info.useSSL");
+					mysql = new MySQL(host, database, username, password, Integer.valueOf(port), useSSL);
+					try {
+						mysql.Connect();
+						plugin.sendError("&8[&6TheMightiestPlayer&8] &e&lCONFIG &3&lSUCESS&6 >> &bPlugin has been conected to your MySQL Database Correctly");
+					} catch (SQLException e) {
+						// TODO Auto-generated catch block
+						plugin.sendError("&8[&6TheMightiestPlayer&8] &c&lCONFIG ERROR&6 >> &bError while connecting to your database:");
+						plugin.sendError("&8[&6TheMightiestPlayer&8] &c&lCONFIG ERROR&6 >> &bFull StackTrace:");
+						e.printStackTrace();
+					}
+				}
+				plugin.sendError("&8[&6TheMightiestPlayer&8] &9&lCONFIG PROGRESS&6 >> &bCreating table if exists for save the information of the plugin...");
+				String TABLE = "Mightiest"+eventID;
+				String textToUpdate = "CREATE TABLE IF NOT EXISTS "+TABLE+" (player_uuid varchar(36), points varchar(11), iscompleted varchar(5), alreadyrewarded varchar(5), finalrewarded varchar(5))";
+				try {
+					mysql.executeUpdate(textToUpdate);
+				} catch (SQLException e) {
+					// TODO Auto-generated catch block
+					plugin.sendError("&8[&6TheMightiestPlayer&8] &c&lCONFIG ERROR&6 >> &bError while creating table "+eventID+" in your database:");
+					plugin.sendError("&8[&6TheMightiestPlayer&8] &c&lCONFIG ERROR&6 >> &bFull StackTrace:");
+					e.printStackTrace();
+				}
+				
 				if(goal.equals(GoalTypes.INDIVIDUAL)) {
-					
+					plugin.sendError("&8[&6TheMightiestPlayer&8] &9&lCONFIG PROGRESS&6 >> &bGenerating Customed Privated Database...");
+					evento.setDatabase(getDatabase(MightiestMySQLPlayer.class, eventID));
+					plugin.sendError("&8[&6TheMightiestPlayer&8] &e&lCONFIG &3&lSUCESS&6 >> &bLoaded privated database without problems.");
 				}else if(goal.equals(GoalTypes.GLOBAL)) {
 					
 				}

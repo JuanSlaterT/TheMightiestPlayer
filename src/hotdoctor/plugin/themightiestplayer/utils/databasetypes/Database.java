@@ -114,22 +114,25 @@ public abstract class Database {
 	
 	public void loadGData() {
 			EventManager manager = EventCreator.cachedInfo.get(this.getEventID());
-			if(manager.getGoalTypeEvent().equals(GoalTypes.GLOBAL)) {
-				int value = 0;
-				if(!Main.plugindata.contains("events."+getEventID()+".value")) {
-					Main.plugindata.set("events."+this.getEventID()+".value", value);
-					try {
-						Main.plugindata.save(Main.datayml);
-					} catch (IOException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
+			if(manager.getDatabaseTypes().equals(DatabaseTypes.MULTIWORLD)) {
+				if(manager.getGoalTypeEvent().equals(GoalTypes.GLOBAL)) {
+					int value = 0;
+					if(!Main.plugindata.contains("events."+getEventID()+".value")) {
+						Main.plugindata.set("events."+this.getEventID()+".value", value);
+						try {
+							Main.plugindata.save(Main.datayml);
+						} catch (IOException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
+					}else {
+						value = Main.plugindata.getInt("events."+getEventID()+".value");
 					}
-				}else {
-					value = Main.plugindata.getInt("events."+getEventID()+".value");
+					this.setGlobalPoints(value);
+					
 				}
-				this.setGlobalPoints(value);
-				
 			}
+
 		
 	}
 	

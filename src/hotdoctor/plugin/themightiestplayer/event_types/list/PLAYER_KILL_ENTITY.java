@@ -19,7 +19,7 @@ public class PLAYER_KILL_ENTITY extends CustomEvent implements Listener{
 	
 	private Plugin plugin;
 	public PLAYER_KILL_ENTITY(Plugin plugin) {
-		super(plugin, "PLAYER_KILL_ENTITY", "Executed when player kills an entity", "PLAYER_KILL_ENTITY:[Property]");
+		super(plugin, "PLAYER_KILL_ENTITY", "Executed when player kills an entity");
 		this.plugin = plugin;
 		// TODO Auto-generated constructor stub
 	}
@@ -37,7 +37,7 @@ public class PLAYER_KILL_ENTITY extends CustomEvent implements Listener{
 				Player killer = e.getEntity().getKiller();
 				String properties = this.getArguments();
 				if(isValid(killer, properties, e)) {
-					this.addPoints(killer, this.getPointsFromConfig(), this.getPointsFromConfig());
+					this.addPoints(killer, this.getPointsFromConfig());
 				}
 			}
 		}
