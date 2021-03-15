@@ -1,0 +1,165 @@
+MySQL-Info:
+  host: localhost
+  username: exampleUser
+  password: examplePassword
+  database: exampleDatabase
+  port: 3306
+  useSSL: false
+gui-settings:
+  title: '&6The Mightiest Player Event'
+  rows: 6
+  items:
+    'cosmetic-item':
+      SLOTS:
+      - '0'
+      - '1'
+      - '2'
+      - '3'
+      - '4'
+      - '5'
+      - '6'
+      - '7'
+      - '8'
+      MATERIAL: stained_glass_pane
+      DATA: 1
+events:
+  'event-kills':
+    event-specifications:
+      TYPE: MULTIWORLD
+      EVENT_TYPE: "PLAYER_BREAK_BLOCK:WORLD=pvp,POINTS=1"
+      starts: '27-02-21_19:40'
+      ends: '27-02-21_21:22'
+      GOAL_TYPE: INDIVIDUAL
+      min-points-reward:
+        enabled: true
+        min-points: 12
+        ACTIONS:
+        - 'CONSOLE|eco give %player_name% 1200'
+        - 'CONSOLE|kit vip %player_name%'
+        - 'MESSAGE|Recompensa reclamada.'
+      finish-event-reward:
+        enabled: true
+        ACTIONS:
+        - 'CONSOLE|eco give %player_name% 5000'
+        - 'MESSAGE|Recompensa FINAL reclamada.'
+    gui-specifications:
+      SLOT: 10
+      not-started-event:
+        ITEM_NAME: '&b&lDAY 1 &7&l- &6&lKILL EVENT'
+        LORE:
+        - '&7&oGet Player Kills'
+        - ''
+        - '&6Progress: &c%tmp-player-value%&7/&412 '
+        - ''
+        - '&8(For this, requires leaderheads and placeholderapi)'
+        - '&6&lTOP &7&l- &b&lRANKING'
+        - '&b&l#1 &6%leaderheads_name_tmp_value_event-kills_alltime_1% &7&l- &c%leaderheads_value_tmp_value_event-kills_alltime_1% &9Points'
+        - '&b&l#2 &6%leaderheads_name_tmp_value_event-kills_alltime_2% &7&l- &c%leaderheads_value_tmp_value_event-kills_alltime_2% &9Points'
+        - '&b&l#3 &6%leaderheads_name_tmp_value_event-kills_alltime_3% &7&l- &c%leaderheads_value_tmp_value_event-kills_alltime_3% &9Points'
+        - '&b&l#4 &6%leaderheads_name_tmp_value_event-kills_alltime_4% &7&l- &c%leaderheads_value_tmp_value_event-kills_alltime_4% &9Points'
+        - '&b&l#5 &6%leaderheads_name_tmp_value_event-kills_alltime_5% &7&l- &c%leaderheads_value_tmp_value_event-kills_alltime_5% &9Points'
+        - ''
+        - '&6Starts in: %date-starts%'
+        - ''
+        - '&6www.spigotmc.org'
+        MATERIAL: PAPER
+      started-but-not-completed:
+        ITEM_NAME: '&b&lDAY 1 &7&l- &6&lKILL EVENT &7&l- &c&lNOT COMPLETED'
+        LORE:
+        - '&7&oGet Player Kills'
+        - ''
+        - '&6Progress: &c%tmp-player-value%&7/&412 '
+        - ''
+        - '&8(For this, requires leaderheads and placeholderapi)'
+        - '&6&lTOP &7&l- &b&lRANKING'
+        - '&b&l#1 &6%leaderheads_name_tmp_value_event-kills_alltime_1% &7&l- &c%leaderheads_value_tmp_value_event-kills_alltime_1% &9Points'
+        - '&b&l#2 &6%leaderheads_name_tmp_value_event-kills_alltime_2% &7&l- &c%leaderheads_value_tmp_value_event-kills_alltime_2% &9Points'
+        - '&b&l#3 &6%leaderheads_name_tmp_value_event-kills_alltime_3% &7&l- &c%leaderheads_value_tmp_value_event-kills_alltime_3% &9Points'
+        - '&b&l#4 &6%leaderheads_name_tmp_value_event-kills_alltime_4% &7&l- &c%leaderheads_value_tmp_value_event-kills_alltime_4% &9Points'
+        - '&b&l#5 &6%leaderheads_name_tmp_value_event-kills_alltime_5% &7&l- &c%leaderheads_value_tmp_value_event-kills_alltime_5% &9Points'
+        - ''
+        - '&6Ends in: %date-ends%'
+        - ''
+        - '&6www.spigotmc.org'
+        MATERIAL: EMPTY_MAP
+      started-completed:
+        ITEM_NAME: '&b&lDAY 1 &7&l- &6&lKILL EVENT &7&l- &a&lCOMPLETED'
+        LORE:
+        - '&7&oGet Player Kills'
+        - ''
+        - '&6Progress: &c%tmp-player-value%&7/&412 '
+        - ''
+        - '&8(For this, requires leaderheads and placeholderapi)'
+        - '&6&lTOP &7&l- &b&lRANKING'
+        - '&b&l#1 &6%leaderheads_name_tmp_value_event-kills_alltime_1% &7&l- &c%leaderheads_value_tmp_value_event-kills_alltime_1% &9Points'
+        - '&b&l#2 &6%leaderheads_name_tmp_value_event-kills_alltime_2% &7&l- &c%leaderheads_value_tmp_value_event-kills_alltime_2% &9Points'
+        - '&b&l#3 &6%leaderheads_name_tmp_value_event-kills_alltime_3% &7&l- &c%leaderheads_value_tmp_value_event-kills_alltime_3% &9Points'
+        - '&b&l#4 &6%leaderheads_name_tmp_value_event-kills_alltime_4% &7&l- &c%leaderheads_value_tmp_value_event-kills_alltime_4% &9Points'
+        - '&b&l#5 &6%leaderheads_name_tmp_value_event-kills_alltime_5% &7&l- &c%leaderheads_value_tmp_value_event-kills_alltime_5% &9Points'
+        - ''
+        - '&6Ends in: %date-ends%'
+        - ''
+        - '&6www.spigotmc.org'
+        MATERIAL: EMPTY_MAP
+        ENCHANTS:
+        - 'DURABILITY:3'
+      ended-not-completed:
+        ITEM_NAME: '&b&lDAY 1 &7&l- &6&lKILL EVENT &7&l- &4&lNOT COMPLETED'
+        LORE:
+        - '&7&oGet Player Kills'
+        - ''
+        - '&6Progress: &c%tmp-player-value%&7/&412 '
+        - ''
+        - '&8(For this, requires leaderheads and placeholderapi)'
+        - '&6&lTOP &7&l- &b&lRANKING'
+        - '&b&l#1 &6%leaderheads_name_tmp_value_event-kills_alltime_1% &7&l- &c%leaderheads_value_tmp_value_event-kills_alltime_1% &9Points'
+        - '&b&l#2 &6%leaderheads_name_tmp_value_event-kills_alltime_2% &7&l- &c%leaderheads_value_tmp_value_event-kills_alltime_2% &9Points'
+        - '&b&l#3 &6%leaderheads_name_tmp_value_event-kills_alltime_3% &7&l- &c%leaderheads_value_tmp_value_event-kills_alltime_3% &9Points'
+        - '&b&l#4 &6%leaderheads_name_tmp_value_event-kills_alltime_4% &7&l- &c%leaderheads_value_tmp_value_event-kills_alltime_4% &9Points'
+        - '&b&l#5 &6%leaderheads_name_tmp_value_event-kills_alltime_5% &7&l- &c%leaderheads_value_tmp_value_event-kills_alltime_5% &9Points'
+        - ''
+        - '&cEvent Ended.'
+        - ''
+        - '&6www.spigotmc.org'
+        MATERIAL: MAP
+      ended-not-completed:
+        ITEM_NAME: '&b&lDAY 1 &7&l- &6&lKILL EVENT &7&l- &4&lNOT COMPLETED'
+        LORE:
+        - '&7&oGet Player Kills'
+        - ''
+        - '&6Progress: &c%tmp-player-value%&7/&412 '
+        - ''
+        - '&8(For this, requires leaderheads and placeholderapi)'
+        - '&6&lTOP &7&l- &b&lRANKING'
+        - '&b&l#1 &6%leaderheads_name_tmp_value_event-kills_alltime_1% &7&l- &c%leaderheads_value_tmp_value_event-kills_alltime_1% &9Points'
+        - '&b&l#2 &6%leaderheads_name_tmp_value_event-kills_alltime_2% &7&l- &c%leaderheads_value_tmp_value_event-kills_alltime_2% &9Points'
+        - '&b&l#3 &6%leaderheads_name_tmp_value_event-kills_alltime_3% &7&l- &c%leaderheads_value_tmp_value_event-kills_alltime_3% &9Points'
+        - '&b&l#4 &6%leaderheads_name_tmp_value_event-kills_alltime_4% &7&l- &c%leaderheads_value_tmp_value_event-kills_alltime_4% &9Points'
+        - '&b&l#5 &6%leaderheads_name_tmp_value_event-kills_alltime_5% &7&l- &c%leaderheads_value_tmp_value_event-kills_alltime_5% &9Points'
+        - ''
+        - '&cEvent Ended.'
+        - ''
+        - '&6www.spigotmc.org'
+        MATERIAL: MAP
+      ended-completed:
+        ITEM_NAME: '&b&lDAY 1 &7&l- &6&lKILL EVENT &7&l- &6&lCOMPLETED'
+        LORE:
+        - '&7&oGet Player Kills'
+        - ''
+        - '&6Progress: &c%tmp-player-value%&7/&412 '
+        - ''
+        - '&8(For this, requires leaderheads and placeholderapi)'
+        - '&6&lTOP &7&l- &b&lRANKING'
+        - '&b&l#1 &6%leaderheads_name_tmp_value_event-kills_alltime_1% &7&l- &c%leaderheads_value_tmp_value_event-kills_alltime_1% &9Points'
+        - '&b&l#2 &6%leaderheads_name_tmp_value_event-kills_alltime_2% &7&l- &c%leaderheads_value_tmp_value_event-kills_alltime_2% &9Points'
+        - '&b&l#3 &6%leaderheads_name_tmp_value_event-kills_alltime_3% &7&l- &c%leaderheads_value_tmp_value_event-kills_alltime_3% &9Points'
+        - '&b&l#4 &6%leaderheads_name_tmp_value_event-kills_alltime_4% &7&l- &c%leaderheads_value_tmp_value_event-kills_alltime_4% &9Points'
+        - '&b&l#5 &6%leaderheads_name_tmp_value_event-kills_alltime_5% &7&l- &c%leaderheads_value_tmp_value_event-kills_alltime_5% &9Points'
+        - ''
+        - '&cEvent Ended.'
+        - ''
+        - '&6www.spigotmc.org'
+        MATERIAL: MAP
+        ENCHANTS:
+        - 'DURABILITY:3'
+      

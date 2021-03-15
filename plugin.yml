@@ -1,0 +1,11 @@
+main: hotdoctor.plugin.themightiestplayer.Main
+version: 1.0
+name: TheMightiestPlayer
+author: HotDoctor
+api-version: 1.13
+softdepend: [PlaceholderAPI, LeaderHeads]
+
+commands:
+  TheMightiestPlayer:
+    description: plugin command of TheMightiestPlayer plugin.
+    aliases: [mightiestplayer, mp, tmp]
